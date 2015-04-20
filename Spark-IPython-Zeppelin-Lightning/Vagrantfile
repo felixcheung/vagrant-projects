@@ -1,0 +1,71 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Configuration parameters
+centosBoxName = "centos65-x86_64-20140116"
+centosBoxUrl = "https://github.com/2creatives/vagrant-centos/releases/download/v6.5.3/centos65-x86_64-20140116.box"
+
+masterRam = 2048                      # Ram in MB for the main node
+masterCpus = 1                        # Number of CPU core for the main node
+
+# For some reason, VirtualBox provider can only route host->VM at 192.168.128.1
+# Also not setting virtualbox__intnet: "networkname" which seems to help
+privateNetworkIp = "192.168.128.1"    # Starting IP range for the private network between nodes
+ipythonPort = 8888                    # Ipython port to forward (set in IPython notebook config)
+
+# Do not edit below this line
+# --------------------------------------------------------------
+privateSubnet = privateNetworkIp.split(".")[0...3].join(".")
+privateStartingIp = privateNetworkIp.split(".")[3].to_i
+
+# Create hosts data
+idNode = 1
+hosts = "#{privateSubnet}.#{privateStartingIp + idNode} node node\n"
+idLgn = 0
+hosts << "#{privateSubnet}.#{privateStartingIp + idLgn} lgn lgn\n"
+
+$hosts_data = <<SCRIPT
+#!/bin/bash
+cat > /etc/hosts <<EOF
+127.0.0.1       localhost
+# The following lines are desirable for IPv6 capable hosts
+::1     ip6-localhost ip6-loopback
+fe00::0 ip6-localnet
+ff00::0 ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+#{hosts}
+EOF
+SCRIPT
+
+Vagrant.configure(2) do |config|
+  config.vm.define "node" do |master|
+    master.vm.box = centosBoxName
+    master.vm.box_url = centosBoxUrl
+    #master.vm.network :public_network, :bridge => 'eth0'
+    master.vm.network :forwarded_port, host: 4040, guest: 4040   # SparkUI port
+    master.vm.network :forwarded_port, host: 8080, guest: 8080   # Zeppelin default port
+    master.vm.network :forwarded_port, host: 8081, guest: 8081   # Zeppelin callback port
+    master.vm.network :forwarded_port, host: ipythonPort, guest: ipythonPort   # IPython port (set in notebook config)
+    master.vm.network :private_network, ip: "#{privateSubnet}.#{privateStartingIp + idNode}", :netmask => "255.255.255.0", virtualbox__intnet: true
+    master.vm.hostname = "node"
+
+    master.vm.provider :virtualbox do |v|
+      v.name = master.vm.hostname.to_s
+      v.customize ["modifyvm", :id, "--memory", "#{masterRam}"]
+      v.customize ["modifyvm", :id, "--cpus", "#{masterCpus}"]
+    end
+    master.vm.provision :shell, :inline => $hosts_data
+    master.vm.provision :shell, :path => "provision_spark_node.sh"
+    master.vm.provision :shell, :path => "provision_spark_app.sh"
+  end
+
+  config.vm.define "lgn" do |lgn|
+    lgn.vm.box = "dwhitworth/boundround"
+    lgn.vm.network :forwarded_port, host: 3000, guest: 3000   # Lightning default port port (set in notebook config)
+    lgn.vm.network :private_network, ip: "#{privateSubnet}.#{privateStartingIp + idLgn}", :netmask => "255.255.255.0", virtualbox__intnet: true
+    lgn.vm.hostname = "lgn"
+    lgn.vm.provision :shell, :inline => $hosts_data
+    lgn.vm.provision :shell, :path => "provision_lgn_app.sh"
+  end
+end
