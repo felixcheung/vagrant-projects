@@ -58,7 +58,6 @@ export JAVA_HOME=/usr/java/jdk1.7.0_67
 echo "JAVA_HOME=${JAVA_HOME}"
 
 # To change Spark version, change SPARKVER to the right distribution package
-# and point install_github for SparkR to the right branch in github
 
 # Spark
 SPARKVER=1.3.0 #1.2.1
