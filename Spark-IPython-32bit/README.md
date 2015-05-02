@@ -19,8 +19,9 @@ VirtualBox https://www.virtualbox.org/wiki/Downloads as a provider
   - Go to local directory and run `vagrant up`
   - Vagrant will then prepare the VM - this should take about ~2 min to download the core vm (aka "box") and then ~4 min for other downloads and provisioning - it will require Internet connection to download various content from sources
   - Spark distribution is automatically downloaded during the provisioning phase
-  - IPython notebook is downloaded and configured during provisioning, and it is launched with PySpark as the very last step. Port forwarding is configured in Vagrant such that to connect to IPython notebook, use http://localhost:1088
-  - Use `vagrant ssh` to connect to the VM machine
+  - IPython notebook is downloaded and configured during provisioning, and it is launched with PySpark as the very last step
+  - To connect to IPython notebook, use http://localhost:1088. To see [SparkContext web UI](https://spark.apache.org/docs/latest/monitoring.html) use http://localhost:4040. Port forwarding is configured in Vagrant.
+  - If needed, use `vagrant ssh` to connect to the VM machine
 
 ### Start/Stop
 
@@ -33,6 +34,10 @@ start:
 `$ ./ipython-pyspark.py`
 
 Connect to http://localhost:1088
+
+#### Spark
+
+Connect to http://localhost:4040 for the Spark UI (Driver)
 
 ### Data transfer
 
