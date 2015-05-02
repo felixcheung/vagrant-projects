@@ -5,14 +5,14 @@ Setup a Vagrant single node with Spark, IPython, and matplotlib, in a ubuntu/tru
 ### Content
 
 Vagrantfile
-apache-mirror-selector.py - Script to help select a Apache mirror to download from
-ipython-pyspark.py - IPython notebook config and launch script
-provision_spark_node.sh - Vagrant provisioning script
+apache-mirror-selector.py - Script to help select a Apache mirror to download from  
+ipython-pyspark.py - IPython notebook config and launch script  
+provision_spark_node.sh - Vagrant provisioning script  
 
 ### Prereq
 
-Vagrant http://docs.vagrantup.com/v2/installation/index.html
-VirtualBox https://www.virtualbox.org/wiki/Downloads as a provider
+Vagrant http://docs.vagrantup.com/v2/installation/index.html  
+VirtualBox https://www.virtualbox.org/wiki/Downloads as a provider  
 
 ### Preparation
 
@@ -31,13 +31,14 @@ VirtualBox https://www.virtualbox.org/wiki/Downloads as a provider
 
 stop: Ctrl-C to break  
 start:  
+`$ sudo su -`
 `$ ./ipython-pyspark.py`
 
-Connect to http://localhost:1088
+Connect to [http://localhost:1088](http://localhost:1088)
 
 #### Spark
 
-Connect to http://localhost:4040 for the Spark UI (Driver)
+Connect to [http://localhost:4040](http://localhost:4040) for the Spark UI (Driver)
 
 ### Data transfer
 
