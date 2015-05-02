@@ -31,7 +31,7 @@ VirtualBox https://www.virtualbox.org/wiki/Downloads as a provider
 
 stop: Ctrl-C to break  
 start:  
-`$ sudo su -`
+`$ sudo su -`  
 `$ ./ipython-pyspark.py`
 
 Connect to [http://localhost:1088](http://localhost:1088)
