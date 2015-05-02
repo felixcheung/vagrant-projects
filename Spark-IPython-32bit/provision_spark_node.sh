@@ -18,7 +18,7 @@ echo "JAVA_HOME=${JAVA_HOME}"
 
 # Spark
 pushd ~
-echo Getting Spark...
+echo "Getting Spark..."
 cp /vagrant/apache-mirror-selector.py ./
 chmod 700 apache-mirror-selector.py
 wget -q `./apache-mirror-selector.py http://www.apache.org/dyn/closer.cgi?path=spark/spark-1.3.1/spark-1.3.1-bin-hadoop2.6.tgz`
@@ -51,6 +51,8 @@ sudo apt-get -y install libzmq-dev
 # required to get pyzmq
 sudo apt-get -y install python-dev
 sudo python -m pip install "ipython[notebook]" --upgrade
+IPYTHONVER=`ipython -V`
+echo "IPython version ${IPYTHONVER}"
 
 # Start IPython notebook
 cd ~
