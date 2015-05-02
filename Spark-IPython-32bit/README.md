@@ -1,6 +1,6 @@
 # Spark-IPython-32bit
 
-Setup a Vagrant single node with Spark, IPython, and matplotlib
+Setup a Vagrant single node with Spark, IPython, and matplotlib, in a ubuntu/trusty32 VM
 
 ### Content
 
