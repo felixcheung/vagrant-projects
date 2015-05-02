@@ -1,4 +1,4 @@
-# Spark-IPython-Zeppelin-Lightning
+# Spark-IPython-32bit
 
 Setup a Vagrant single node with Spark, IPython, and matplotlib
 
