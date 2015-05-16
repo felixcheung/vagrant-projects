@@ -63,6 +63,7 @@ try:
     ipython_profile_path         = os.popen('ipython locate').read().rstrip('\n') + '/profile_%s' % profile_name
     setup_py_path                = ipython_profile_path + '/startup/00-pyspark-setup.py'
     ipython_notebook_config_path = ipython_profile_path + '/ipython_notebook_config.py'
+    ipython_kernel_config_path   = ipython_profile_path + '/ipython_kernel_config.py'
 
     if not os.path.exists(ipython_profile_path):
         print 'Creating IPython Notebook profile\n'
@@ -76,6 +77,16 @@ try:
         setup_file.write(pyspark_setup_template)
         setup_file.close()
         os.chmod(setup_py_path, 0600)
+
+    # matplotlib inline
+    kernel_config = open(ipython_kernel_config_path).read()
+    if "c.IPKernelApp.matplotlib = 'inline'" not in kernel_config:
+        print 'Writing IPython kernel config\n'
+        new_kernel_config = kernel_config.replace('# c.IPKernelApp.matplotlib = None', "c.IPKernelApp.matplotlib = 'inline'")
+        kernel_file = open(ipython_kernel_config_path, 'w')
+        kernel_file.write(new_kernel_config)
+        kernel_file.close()
+        os.chmod(ipython_kernel_config_path, 0600)
 
     if not os.path.exists(ipython_notebook_config_path) or 'open_browser = False' not in open(ipython_notebook_config_path).read():
         print 'Writing IPython Notebook config\n'
