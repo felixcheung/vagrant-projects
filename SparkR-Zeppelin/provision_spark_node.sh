@@ -46,8 +46,8 @@ SPARKHOME=$(pwd)
 echo '# set SPARK_HOME and PATH' >> /etc/profile.d/spark.sh
 echo "export SPARK_HOME=${SPARKHOME}" >> /etc/profile.d/spark.sh
 echo 'export PATH=$SPARK_HOME/bin:$PATH' >> /etc/profile.d/spark.sh
-sudo export SPARK_HOME=$SPARKHOME
-sudo export PATH=$SPARK_HOME/bin:$PATH
+export SPARK_HOME=$SPARKHOME
+export PATH=$SPARK_HOME/bin:$PATH
 echo "SPARK_HOME=${SPARK_HOME}"
 popd
 
@@ -74,7 +74,6 @@ EOF
 sudo R --slave < init.R
 rm -f init.R
 popd
-
 
 echo "== end node $(date +'%Y/%m/%d %H:%M:%S')"
 echo "== $(($(date +%s) - $STARTTIME)) seconds"
