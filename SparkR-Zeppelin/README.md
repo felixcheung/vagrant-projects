@@ -4,12 +4,12 @@ Setup a Vagrant node with Spark, SparkR, and Zeppelin
 
 ### Content
 
-apache-mirror-selector - script to pick Apache mirror URL
-provision_spark_app.sh - provisioning, Zeppelin and demo stuff
-provision_spark_node.sh - provisioning, JDK, R, Spark, SparkR, rscala
-spark-1.4.1-bin-hadoop2.4.tgz - Spark 1.4.1 official release
-Vagrantfile
-zeppelin-0.6.0-incubating-SNAPSHOT.tar.gz - Zeppelin build with SparkR interpreter
+apache-mirror-selector - script to pick Apache mirror URL  
+provision_spark_app.sh - provisioning, Zeppelin and R packages for demo  
+provision_spark_node.sh - provisioning, JDK, R, Spark, SparkR, rscala  
+spark-1.4.1-bin-hadoop2.4.tgz - Spark 1.4.1 official release  
+Vagrantfile  
+zeppelin-0.6.0-incubating-SNAPSHOT.tar.gz - Zeppelin build with SparkR interpreter  
 
 ### Prereq
 
