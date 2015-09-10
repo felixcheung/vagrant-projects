@@ -29,7 +29,7 @@ javac -version
 
 # Spark
 # To change Spark version, change SPARKVER to the right distribution package
-SPARKVER=1.4.1
+SPARKVER=1.5.0
 cp /vagrant/apache-mirror-selector.py ~/
 pushd /opt
 if [ ! -f /vagrant/spark-$SPARKVER-bin-hadoop2.6.tgz ]; then
@@ -51,7 +51,7 @@ export PATH=$SPARK_HOME/bin:$PATH
 echo "SPARK_HOME=${SPARK_HOME}"
 popd
 
-# SparkR
+# SparkR, installing it from within R is optional - it can otherwise be loaded with lib.loc
 pushd $SPARKHOME/R/lib/SparkR
 sudo R CMD INSTALL $(pwd)/
 sudo R -e 'library(SparkR)' --slave
