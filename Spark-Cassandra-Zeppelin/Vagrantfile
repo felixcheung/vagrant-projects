@@ -1,0 +1,25 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Configuration parameters
+boxRam = 4096                      # Ram in MB
+boxCpus = 2                        # Number of CPU core
+
+
+Vagrant.configure(2) do |config|
+  config.vm.define "sczvm" do |master|
+    # ubuntu/xenial64 - doesn't work with folder share in Vagrant 1.8.1
+    # ubuntu/trusty64 - doesn't have supported openjdk-8
+    master.vm.box = "ubuntu/vivid64"
+    master.vm.network :forwarded_port, host: 4040, guest: 4040   # Spark UI (Driver)
+    master.vm.network :forwarded_port, host: 8080, guest: 8080   # Zeppelin default port
+    master.vm.hostname = "sczvm"
+
+    master.vm.provider :virtualbox do |v|
+      v.name = master.vm.hostname.to_s
+      v.customize ["modifyvm", :id, "--memory", "#{boxRam}"]
+      v.customize ["modifyvm", :id, "--cpus", "#{boxCpus}"]
+    end
+    master.vm.provision :shell, :path => "provision_spark_node.sh"
+  end
+end
