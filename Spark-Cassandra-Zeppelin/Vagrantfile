@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 # Configuration parameters
-boxRam = 4096                      # Ram in MB
+boxRam = 8192                      # Ram in MB
 boxCpus = 2                        # Number of CPU core
 
 

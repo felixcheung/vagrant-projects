@@ -15,6 +15,8 @@ sudo apt-get update
 # sudo apt-get -y upgrade
 # sudo apt-get install wget
 
+sudo apt-get -y install unzip
+
 # JDK
 if [ -n "${ISTRUSTY// }" ]; then
   # Trusty Tahr does not have JDK 8 support https://bugs.launchpad.net/trusty-backports/+bug/1368094
@@ -24,6 +26,11 @@ else
 fi
 java -version
 javac -version
+
+# python
+sudo apt-get -y install python-pip
+sudo apt-get -y install python-matplotlib
+sudo apt-get -y install python-dev
 
 # Spark
 # To change Spark version, change SPARKVER to the right distribution package
@@ -128,6 +135,7 @@ cat > /lib/systemd/system/zeppelin.service <<EOF
 Description=Apache Zeppelin
 
 [Service]
+Environment='SPARK_HOME=/opt/spark-1.6.1-bin-hadoop2.6'
 ExecStart=/opt/incubator-zeppelin/bin/zeppelin-daemon.sh upstart
 Restart=on-failure
 RestartSec=1
