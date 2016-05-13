@@ -18,11 +18,6 @@ sudo apt-get update
 
 sudo apt-get -y install unzip
 
-if [ -n "${ISWILY// }" ]; then
-  # Fix build error: java.lang.RuntimeException: Unexpected error: java.security.InvalidAlgorithmParameterException: the trustAnchors parameter must be non-empty and 'parent.relativePath' points at wrong local POM
-  sudo /var/lib/dpkg/info/ca-certificates-java.postinst configure
-fi
-
 # JDK
 if [ -n "${ISTRUSTY// }" ]; then
   # Trusty Tahr does not have JDK 8 support https://bugs.launchpad.net/trusty-backports/+bug/1368094
@@ -32,6 +27,11 @@ else
 fi
 java -version
 javac -version
+
+if [ -n "${ISWILY// }" ]; then
+  # Fix build error: java.lang.RuntimeException: Unexpected error: java.security.InvalidAlgorithmParameterException: the trustAnchors parameter must be non-empty and 'parent.relativePath' points at wrong local POM
+  sudo /var/lib/dpkg/info/ca-certificates-java.postinst configure
+fi
 
 # python
 sudo apt-get -y install python-pip
