@@ -4,6 +4,7 @@ echo "== start node $(date +'%Y/%m/%d %H:%M:%S')"
 STARTTIME=$(date +%s)
 
 ISTRUSTY=`lsb_release -a | grep -e "14.04"`
+ISWILY=`lsb_release -a | grep -e "15.10"`
 
 set -xe
 
@@ -16,6 +17,11 @@ sudo apt-get update
 # sudo apt-get install wget
 
 sudo apt-get -y install unzip
+
+if [ -n "${ISWILY// }" ]; then
+  # Fix build error: java.lang.RuntimeException: Unexpected error: java.security.InvalidAlgorithmParameterException: the trustAnchors parameter must be non-empty and 'parent.relativePath' points at wrong local POM
+  sudo /var/lib/dpkg/info/ca-certificates-java.postinst configure
+fi
 
 # JDK
 if [ -n "${ISTRUSTY// }" ]; then
